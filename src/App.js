@@ -19,9 +19,14 @@ const expenses = [
 ];
 
 function App() {
+	const addExpenseHandler = (expense) => {
+		console.log("In App.js");
+		console.log(expense);
+	};
+
 	return (
 		<div className="App">
-			<NewExpense />
+			<NewExpense onAddExpense={addExpenseHandler} />
 			{/* <ExpenseItem
 				date={new Date(2021, 2, 28)}
 				title={"Car Insurance"}

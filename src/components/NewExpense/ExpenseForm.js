@@ -1,12 +1,36 @@
+import { useState } from "react";
+
 import "./ExpenseForm.css";
 
 const ExpenseForm = (props) => {
+	const [enteredTitle, setEnteredTitle] = useState(""); // [state, function]
 	const titleChangeHandler = (event) => {
-		console.log(event.target.value);
+		setEnteredTitle(event.target.value);
+	};
+	const [enteredAmount, setEnteredAmount] = useState(""); // [state, function]
+	const amountChangeHandler = (event) => {
+		setEnteredAmount(event.target.value);
+	};
+	const [enteredDate, setEnteredDate] = useState(""); // [state, function]
+	const dateChangeHandler = (event) => {
+		setEnteredDate(event.target.value);
+	};
+
+	const sumbitHandler = (event) => {
+		event.preventDefault(); // Prevents the default action of the event from being triggered.
+		const expenseData = {
+			title: enteredTitle,
+			amount: enteredAmount,
+			date: new Date(enteredDate),
+		};
+		props.onSaveExpenseData(expenseData);
+		setEnteredTitle("");
+		setEnteredAmount("");
+		setEnteredDate("");
 	};
 
 	return (
-		<form>
+		<form onSubmit={sumbitHandler}>
 			<div className="new-expense__controls">
 				<div className="new-expense__control">
 					<label>Title</label>
@@ -19,7 +43,8 @@ const ExpenseForm = (props) => {
                     */}
 					<input
 						type="text"
-						onChange={(event) => console.log(event.target.value)}
+						value={enteredTitle}
+						onChange={(event) => titleChangeHandler(event)}
 					/>
 				</div>
 				<div className="new-expense__control">
@@ -35,7 +60,8 @@ const ExpenseForm = (props) => {
 						type="number"
 						min="0.01"
 						step="0.01"
-						onChange={(event) => console.log(event.target.value)}
+						value={enteredAmount}
+						onChange={(event) => amountChangeHandler(event)}
 					/>
 				</div>
 				<div className="new-expense__control">
@@ -51,7 +77,8 @@ const ExpenseForm = (props) => {
 						type="date"
 						min="2019-01-01"
 						max="2024-12-31"
-						onChange={(event) => console.log(event.target.value)}
+						value={enteredDate}
+						onChange={(event) => dateChangeHandler(event)}
 					/>
 				</div>
 			</div>
